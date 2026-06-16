@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#06060c" />
+  <title>Parallax Agents — Deploy an AI Workforce for Your Business</title>
+  <meta name="description" content="Parallax Agents deploys swarms of frontier AI agents — Anthropic, OpenAI, Gemini — across your business. Design, deploy, and scale an autonomous workforce from one console." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Cinematic load veil -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__mark">
+      <svg viewBox="0 0 100 100" width="60" height="60" aria-hidden="true">
+        <g class="pl-orbit">
+          <circle cx="50" cy="50" r="34" fill="none" stroke="url(#plg)" stroke-width="1.2" opacity="0.5"/>
+          <circle cx="50" cy="50" r="22" fill="none" stroke="url(#plg)" stroke-width="1.2" opacity="0.7"/>
+        </g>
+        <circle cx="50" cy="50" r="5" fill="url(#plg)"/>
+        <defs>
+          <linearGradient id="plg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#8a7bff"/>
+            <stop offset="1" stop-color="#46e6d8"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="preloader__text">PARALLAX<span>AGENTS</span></div>
+    <div class="preloader__bar"><span id="plBar"></span></div>
+  </div>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- Global ambient swarm canvas -->
+  <canvas id="swarm" class="swarm-canvas" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <a href="#top" class="brand" data-cursor="hover">
+      <span class="brand__mark">
+        <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true">
+          <g class="brand__orbit">
+            <ellipse cx="50" cy="50" rx="40" ry="16" fill="none" stroke="url(#bg1)" stroke-width="2"/>
+            <ellipse cx="50" cy="50" rx="40" ry="16" fill="none" stroke="url(#bg1)" stroke-width="2" transform="rotate(60 50 50)"/>
+            <ellipse cx="50" cy="50" rx="40" ry="16" fill="none" stroke="url(#bg1)" stroke-width="2" transform="rotate(120 50 50)"/>
+          </g>
+          <circle cx="50" cy="50" r="7" fill="url(#bg1)"/>
+          <defs>
+            <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#9a8bff"/>
+              <stop offset="1" stop-color="#46e6d8"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+      <span class="brand__name">Parallax<strong>Agents</strong></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#how" data-cursor="hover">How it works</a>
+      <a href="#console" data-cursor="hover">The Console</a>
+      <a href="#swarm-sec" data-cursor="hover">The Swarm</a>
+      <a href="#constellation" data-cursor="hover">Constellation</a>
+      <a href="#providers" data-cursor="hover">Providers</a>
+    </nav>
+
+    <div class="nav__actions">
+      <a href="#" class="btn btn--ghost" data-cursor="hover">Sign in</a>
+      <a href="#cta" class="btn btn--solid" data-cursor="hover" data-magnetic>
+        <span>Deploy a swarm</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero__layers" id="heroLayers">
+        <div class="layer layer--glow" data-depth="0.06"></div>
+        <div class="layer layer--grid" data-depth="0.12"></div>
+        <div class="layer layer--rings" data-depth="0.2">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="hero__inner">
+        <div class="tagline reveal" data-cursor="hover">
+          <span class="tagline__dot"></span>
+          Autonomous workforce infrastructure
+        </div>
+
+        <h1 class="hero__title">
+          <span class="line reveal-mask"><span>Deploy a <em>swarm</em> of</span></span>
+          <span class="line reveal-mask"><span>frontier AI agents</span></span>
+          <span class="line reveal-mask"><span>to run your <em>business</em>.</span></span>
+        </h1>
+
+        <p class="hero__sub reveal">
+          Parallax Agents lets you design, deploy, and orchestrate
+          <strong>20–30 frontier agents</strong> — Anthropic, OpenAI, or Gemini — across
+          every team. Give each employee an autonomous swarm and multiply what they can do.
+        </p>
+
+        <div class="hero__cta reveal">
+          <a href="#cta" class="btn btn--solid btn--lg" data-magnetic data-cursor="hover">
+            <span>Deploy your swarm</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#how" class="btn btn--line btn--lg" data-cursor="hover">
+            <span>See how it works</span>
+          </a>
+        </div>
+
+        <div class="hero__providers reveal" aria-label="Supported providers">
+          <span class="hero__providers-label">Powered by the frontier</span>
+          <div class="prov-chips">
+            <span class="prov-chip" data-cursor="hover"><i class="dot dot--anthropic"></i>Anthropic</span>
+            <span class="prov-chip" data-cursor="hover"><i class="dot dot--openai"></i>OpenAI</span>
+            <span class="prov-chip" data-cursor="hover"><i class="dot dot--gemini"></i>Google Gemini</span>
+          </div>
+        </div>
+      </div>
+
+      <a href="#how" class="hero__scroll" aria-label="Scroll" data-cursor="hover">
+        <span class="hero__scroll-line"></span>
+        <span class="hero__scroll-text">Scroll</span>
+      </a>
+
+      <!-- Floating live stat -->
+      <div class="hero__ticker reveal">
+        <div class="ticker-item"><b id="statAgents">0</b><span>agents live</span></div>
+        <div class="ticker-sep"></div>
+        <div class="ticker-item"><b id="statTasks">0</b><span>tasks / min</span></div>
+        <div class="ticker-sep"></div>
+        <div class="ticker-item"><b id="statUptime">0</b><span>% uptime</span></div>
+      </div>
+    </section>
+
+    <!-- VALUE / MARQUEE -->
+    <section class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Sales</span><i>✳</i><span>Support</span><i>✳</i><span>Research</span><i>✳</i>
+        <span>Operations</span><i>✳</i><span>Finance</span><i>✳</i><span>Marketing</span><i>✳</i>
+        <span>Recruiting</span><i>✳</i><span>Engineering</span><i>✳</i><span>Legal</span><i>✳</i>
+        <span>Sales</span><i>✳</i><span>Support</span><i>✳</i><span>Research</span><i>✳</i>
+        <span>Operations</span><i>✳</i><span>Finance</span><i>✳</i><span>Marketing</span><i>✳</i>
+        <span>Recruiting</span><i>✳</i><span>Engineering</span><i>✳</i><span>Legal</span><i>✳</i>
+      </div>
+    </section>
+
+    <!-- VALUE PROP -->
+    <section class="value" id="value">
+      <div class="value__head">
+        <span class="eyebrow reveal">The shift</span>
+        <h2 class="reveal">Your employees are capped.<br><span class="grad">Their agents aren't.</span></h2>
+        <p class="reveal">Every person on your team has a ceiling of hours in a day. Parallax breaks the ceiling — pairing each employee with a swarm of always-on frontier agents that research, draft, build, and execute around the clock.</p>
+      </div>
+
+      <div class="value__grid">
+        <article class="vcard reveal" data-tilt data-cursor="hover">
+          <div class="vcard__icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3>Design any agent</h3>
+          <p>Compose agents in a visual builder — role, tools, knowledge, guardrails, and the model that fits the job. No infrastructure to wrangle.</p>
+        </article>
+
+        <article class="vcard reveal" data-tilt data-cursor="hover">
+          <div class="vcard__icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none"><path d="M4 7l8-4 8 4-8 4-8-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 12l8 4 8-4M4 17l8 4 8-4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Deploy a swarm</h3>
+          <p>Spin up 20–30 agents in seconds, each on its own provider account. They coordinate, hand off work, and escalate to humans when it matters.</p>
+        </article>
+
+        <article class="vcard reveal" data-tilt data-cursor="hover">
+          <div class="vcard__icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none"><path d="M3 17l5-5 4 4 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 8h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Scale the output</h3>
+          <p>Every employee becomes a team lead. Measure throughput, cost, and impact in one dashboard and grow the swarm as fast as the work demands.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how" id="how">
+      <div class="section-head">
+        <span class="eyebrow reveal">How it works</span>
+        <h2 class="reveal">From idea to autonomous workforce<br><span class="grad">in three moves.</span></h2>
+      </div>
+
+      <div class="steps">
+        <div class="steps__rail" aria-hidden="true"><span id="stepsFill"></span></div>
+
+        <article class="step reveal" data-step="01">
+          <div class="step__num">01</div>
+          <h3>Design</h3>
+          <p>Describe the role in plain language or start from a template. Parallax assembles the agent — model, tools, memory, and permissions — and previews it instantly.</p>
+          <ul class="step__list">
+            <li>Visual + prompt-driven builder</li>
+            <li>Bring your own tools & data</li>
+            <li>Guardrails and approvals built in</li>
+          </ul>
+        </article>
+
+        <article class="step reveal" data-step="02">
+          <div class="step__num">02</div>
+          <h3>Deploy</h3>
+          <p>Launch one agent or a swarm of thirty across Anthropic, OpenAI, and Gemini accounts. Parallax handles provisioning, routing, and orchestration.</p>
+          <ul class="step__list">
+            <li>20–30 agents per swarm</li>
+            <li>Multi-provider, per-agent accounts</li>
+            <li>Coordinated hand-offs & escalation</li>
+          </ul>
+        </article>
+
+        <article class="step reveal" data-step="03">
+          <div class="step__num">03</div>
+          <h3>Scale</h3>
+          <p>Watch the swarm work in real time. Track tasks, cost, and outcomes, then clone what works and assign a swarm to every employee on the team.</p>
+          <ul class="step__list">
+            <li>Live throughput & cost analytics</li>
+            <li>One-click clone & assign</li>
+            <li>Enterprise controls & audit logs</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- THE CONSOLE -->
+    <section class="console" id="console">
+      <div class="console__copy">
+        <span class="eyebrow reveal">The Console</span>
+        <h2 class="reveal">Design and deploy agents<br><span class="grad">from your account.</span></h2>
+        <p class="reveal">One command center for your entire autonomous workforce. Compose an agent, pick a provider, and push it live — then orchestrate the whole swarm without leaving the page.</p>
+        <ul class="console__feats reveal">
+          <li><span>◆</span> Per-agent model & provider selection</li>
+          <li><span>◆</span> Live logs, cost, and task streams</li>
+          <li><span>◆</span> Role templates for every department</li>
+          <li><span>◆</span> Role-based access & full audit trail</li>
+        </ul>
+      </div>
+
+      <div class="console__app reveal" data-tilt data-tilt-max="6">
+        <div class="app">
+          <div class="app__bar">
+            <span class="app__dots"><i></i><i></i><i></i></span>
+            <span class="app__title">parallax · mission control</span>
+            <span class="app__live"><i></i> live</span>
+          </div>
+          <div class="app__body">
+            <aside class="app__side">
+              <div class="app__side-item is-active"><span class="si-ic">⬡</span>Swarm</div>
+              <div class="app__side-item"><span class="si-ic">◎</span>Agents</div>
+              <div class="app__side-item"><span class="si-ic">◷</span>Tasks</div>
+              <div class="app__side-item"><span class="si-ic">▤</span>Cost</div>
+              <div class="app__side-item"><span class="si-ic">⚙</span>Settings</div>
+            </aside>
+            <div class="app__main">
+              <div class="app__term" id="term">
+                <div class="term__line"><span class="term__prompt">parallax ▸</span> <span class="term__cmd" id="termCmd"></span><span class="term__caret">▋</span></div>
+                <div class="term__out" id="termOut"></div>
+              </div>
+              <div class="app__agents" id="appAgents"></div>
+            </div>
+          </div>
+        </div>
+        <div class="console__glow"></div>
+      </div>
+    </section>
+
+    <!-- THE SWARM -->
+    <section class="swarm-sec" id="swarm-sec">
+      <div class="section-head">
+        <span class="eyebrow reveal">The Swarm</span>
+        <h2 class="reveal">One swarm. Every function<br><span class="grad">of the business.</span></h2>
+        <p class="reveal">Assign agents to the work humans shouldn't have to hold in their heads. They run in parallel, share context, and never sleep.</p>
+      </div>
+
+      <div class="swarm-grid">
+        <article class="scard reveal" data-cursor="hover" style="--i:0">
+          <span class="scard__tag">Sales</span>
+          <h3>Pipeline that builds itself</h3>
+          <p>Prospect, enrich, draft outreach, and book meetings while reps focus on closing.</p>
+        </article>
+        <article class="scard reveal" data-cursor="hover" style="--i:1">
+          <span class="scard__tag">Support</span>
+          <h3>Resolution before the ticket</h3>
+          <p>Triage, answer, and escalate across every channel with full account context.</p>
+        </article>
+        <article class="scard reveal" data-cursor="hover" style="--i:2">
+          <span class="scard__tag">Research</span>
+          <h3>Always-on intelligence</h3>
+          <p>Monitor markets, summarize sources, and surface what your team needs to know.</p>
+        </article>
+        <article class="scard reveal" data-cursor="hover" style="--i:3">
+          <span class="scard__tag">Operations</span>
+          <h3>The work between the work</h3>
+          <p>Reconcile systems, chase approvals, and keep every workflow moving.</p>
+        </article>
+        <article class="scard reveal" data-cursor="hover" style="--i:4">
+          <span class="scard__tag">Finance</span>
+          <h3>Close the books faster</h3>
+          <p>Categorize, flag anomalies, and prep reports with a verifiable audit trail.</p>
+        </article>
+        <article class="scard reveal" data-cursor="hover" style="--i:5">
+          <span class="scard__tag">Marketing</span>
+          <h3>Campaigns at swarm speed</h3>
+          <p>Draft, localize, and test content across channels, then learn from the results.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONSTELLATION / SWARM VISUALIZATION -->
+    <section class="constellation" id="constellation">
+      <div class="section-head">
+        <span class="eyebrow reveal">The constellation</span>
+        <h2 class="reveal">One person.<br><span class="grad">A workforce of their own.</span></h2>
+        <p class="reveal">Every employee sits at the center of a living swarm — leads coordinate the work, specialists execute it, and a frontier model powers each node. Hover any agent to inspect it.</p>
+      </div>
+
+      <div class="constell reveal">
+        <div class="constell__stage" id="constellStage">
+          <div class="constell__rings" aria-hidden="true"><span></span><span></span><span></span></div>
+          <svg id="constellSvg" viewBox="0 0 620 620" role="img" aria-label="Interactive diagram of one employee surrounded by an orbiting swarm of AI agents across Anthropic, OpenAI and Gemini"></svg>
+          <div class="constell__hint"><span class="constell__hint-dot"></span> Hover an agent — auto-orbit pauses</div>
+        </div>
+
+        <aside class="constell__panel">
+          <div class="cp-focus" id="cpFocus"></div>
+          <div class="cp-comp">
+            <h4>Swarm composition</h4>
+            <div class="cp-legend" id="cpLegend"></div>
+          </div>
+          <a href="#cta" class="btn btn--solid cp-cta" data-cursor="hover" data-magnetic>
+            <span>Scale to 30 agents</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PROVIDERS -->
+    <section class="providers" id="providers">
+      <div class="section-head">
+        <span class="eyebrow reveal">Providers</span>
+        <h2 class="reveal">Deploy on whatever<br><span class="grad">frontier wins today.</span></h2>
+        <p class="reveal">Parallax is model-agnostic. Run each agent on the provider that fits the task — and switch the moment a better frontier model ships. No lock-in, ever.</p>
+      </div>
+
+      <div class="prov-grid">
+        <article class="pcard pcard--anthropic reveal" data-tilt data-cursor="hover">
+          <div class="pcard__head"><i class="dot dot--anthropic"></i> Anthropic</div>
+          <h3>Claude</h3>
+          <p>Deep reasoning, long context, and dependable tool use for your most nuanced work.</p>
+          <span class="pcard__meta">Opus · Sonnet · Haiku</span>
+        </article>
+        <article class="pcard pcard--openai reveal" data-tilt data-cursor="hover">
+          <div class="pcard__head"><i class="dot dot--openai"></i> OpenAI</div>
+          <h3>GPT</h3>
+          <p>Fast, flexible generalists with a vast tool ecosystem for high-volume throughput.</p>
+          <span class="pcard__meta">Frontier · Reasoning · Mini</span>
+        </article>
+        <article class="pcard pcard--gemini reveal" data-tilt data-cursor="hover">
+          <div class="pcard__head"><i class="dot dot--gemini"></i> Google Gemini</div>
+          <h3>Gemini</h3>
+          <p>Massive context and native multimodality for agents that see, read, and watch.</p>
+          <span class="pcard__meta">Pro · Flash · Multimodal</span>
+        </article>
+      </div>
+
+      <p class="providers__foot reveal">…and every frontier model that comes next. <a href="#cta" data-cursor="hover">We add them the day they launch →</a></p>
+    </section>
+
+    <!-- IMPACT / METRICS -->
+    <section class="impact" id="impact">
+      <div class="impact__inner">
+        <div class="metric reveal">
+          <b class="metric__num" data-count="30" data-suffix="">0</b>
+          <span class="metric__lbl">agents per swarm</span>
+        </div>
+        <div class="metric reveal">
+          <b class="metric__num" data-count="3" data-suffix="">0</b>
+          <span class="metric__lbl">frontier providers</span>
+        </div>
+        <div class="metric reveal">
+          <b class="metric__num" data-count="24" data-suffix="/7">0</b>
+          <span class="metric__lbl">autonomous uptime</span>
+        </div>
+        <div class="metric reveal">
+          <b class="metric__num" data-count="10" data-suffix="×">0</b>
+          <span class="metric__lbl">output per employee</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="cta">
+      <div class="cta__bg" aria-hidden="true"></div>
+      <div class="cta__inner reveal">
+        <h2>Give every employee<br><span class="grad">a swarm of their own.</span></h2>
+        <p>Stand up your first agents in minutes. Scale to a full autonomous workforce when you're ready.</p>
+        <form class="cta__form" id="ctaForm" novalidate>
+          <input type="email" id="ctaEmail" placeholder="you@company.com" aria-label="Work email" required />
+          <button type="submit" class="btn btn--solid btn--lg" data-magnetic data-cursor="hover">
+            <span>Request access</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <span class="cta__note" id="ctaNote">No credit card. Deploy on your own accounts.</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <a href="#top" class="brand brand--footer" data-cursor="hover">
+        <span class="brand__name">Parallax<strong>Agents</strong></span>
+      </a>
+      <nav class="footer__nav" aria-label="Footer">
+        <div><h4>Product</h4><a href="#how" data-cursor="hover">How it works</a><a href="#console" data-cursor="hover">Console</a><a href="#providers" data-cursor="hover">Providers</a></div>
+        <div><h4>Company</h4><a href="#" data-cursor="hover">About</a><a href="#" data-cursor="hover">Careers</a><a href="#" data-cursor="hover">Blog</a></div>
+        <div><h4>Resources</h4><a href="#" data-cursor="hover">Docs</a><a href="#" data-cursor="hover">Security</a><a href="#" data-cursor="hover">Status</a></div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Parallax Agents, Inc. All rights reserved.</span>
+      <span class="footer__tag">Deploy the frontier.</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

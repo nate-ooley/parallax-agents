@@ -309,7 +309,7 @@
   function tickTelemetry() {
     if (sAgents) sAgents.textContent = (baseAgents += Math.floor(Math.random() * 3)).toLocaleString();
     if (sTasks) sTasks.textContent = (3200 + Math.floor(Math.random() * 600)).toLocaleString();
-    if (sUptime) sUptime.textContent = (99.9 + Math.random() * 0.09).toFixed(2);
+    if (sUptime) sUptime.textContent = "100";
   }
   tickTelemetry();
   setInterval(tickTelemetry, 1800);

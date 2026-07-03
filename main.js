@@ -31,7 +31,7 @@
 
   /* ---------------------------------------------------------
      AGENT SWARM CANVAS  (the signature motif)
-     Provider-colored nodes orbit in clusters, link up when
+     Provider-colored nodes drift and wrap, link up when
      close, and react to the cursor like a gravitational lens.
   --------------------------------------------------------- */
   const canvas = document.getElementById("swarm");
@@ -43,7 +43,7 @@
     { name: "gemini",    color: [106, 166, 255] },
     { name: "core",      color: [138, 123, 255] },
   ];
-  const mouse = { x: -9999, y: -9999, vx: 0, vy: 0, active: false };
+  const mouse = { x: -9999, y: -9999, active: false };
 
   function resize() {
     DPR = Math.min(window.devicePixelRatio || 1, 2);
@@ -410,8 +410,10 @@
   const email = document.getElementById("ctaEmail");
   const note = document.getElementById("ctaNote");
   if (form) {
+    let submitted = false;
     form.addEventListener("submit", (e) => {
       e.preventDefault();
+      if (submitted) return;
       const v = (email.value || "").trim();
       const ok = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
       if (!ok) {
@@ -424,6 +426,7 @@
       note.classList.add("ok");
       email.value = "";
       email.disabled = true;
+      submitted = true;
     });
   }
 
@@ -524,7 +527,6 @@
       const beam = el("line", { class: `beam bs-${lead.prov}` });
       beamLayer.appendChild(beam);
       node.parentBeam = beam;
-      node.beamFrom = center;
       beams.push({ line: beam, from: center, to: node });
       orbiting.push(node);
 
@@ -543,7 +545,7 @@
     });
 
     // ---- animation ----
-    let offset = 0, paused = false, raf = 0;
+    let offset = 0, paused = false;
     const SPEED = 0.05; // deg/frame ≈ 120s per rotation
 
     function place() {
@@ -567,7 +569,7 @@
         b.line.setAttribute("x1", b.from.x); b.line.setAttribute("y1", b.from.y);
         b.line.setAttribute("x2", b.to.x); b.line.setAttribute("y2", b.to.y);
       }
-      raf = requestAnimationFrame(place);
+      requestAnimationFrame(place);
     }
 
     // ---- panel rendering ----

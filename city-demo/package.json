@@ -1,0 +1,1 @@
+{"name":"parallax-agent-quarter","private":true,"type":"module","scripts":{"test":"node --test engine.test.mjs connections.test.mjs"}}

@@ -196,6 +196,8 @@ for (const swatch of document.querySelectorAll('[data-color]')) swatch.addEventL
 $('#brand-reset').addEventListener('click', () => { $('#brand-name').value = 'Harbor Home Services'; updateBrand(); setPalette('rose'); });
 motion.addEventListener('change', () => { if (motion.matches) stop(); render(); });
 window.addEventListener('pagehide', stop);
+// A restored page retains its old DOM but its replay timer was stopped on exit.
+window.addEventListener('pageshow', event => { if (event.persisted) { render(); checkServer(); } });
 render();
 // Start only once the demonstration is visible. Every loop replays the same
 // synthetic records; it never fabricates additional bookings or usage totals.
@@ -205,3 +207,33 @@ const demoObserver = new IntersectionObserver(entries => {
   if (!userInteracted && !motion.matches) play();
 }, { threshold: 0.25 });
 demoObserver.observe($('#city'));
+
+let checkingServer = false;
+async function checkServer() {
+  if (checkingServer) return;
+  checkingServer = true;
+  const label = $('#server-status');
+  const button = $('#server-check');
+  label.dataset.state = 'checking';
+  label.textContent = 'Checking web server…';
+  button.disabled = true;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const response = await fetch('/api/health', { cache: 'no-store', signal: controller.signal, headers: { Accept: 'application/json' } });
+    if (!response.ok) throw new Error('Server check failed');
+    const result = await response.json();
+    if (result.ok !== true || result.service !== 'parallax-agents' || result.mode !== 'demo' || !Number.isFinite(Date.parse(result.checkedAt))) throw new Error('Unexpected server response');
+    label.dataset.state = 'online';
+    label.textContent = `Web server connected · checked ${new Date(result.checkedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+  } catch {
+    label.dataset.state = 'offline';
+    label.textContent = 'Web server unavailable · sample replay works in this browser';
+  } finally {
+    clearTimeout(timeout);
+    checkingServer = false;
+    button.disabled = false;
+  }
+}
+$('#server-check').addEventListener('click', checkServer);
+checkServer();

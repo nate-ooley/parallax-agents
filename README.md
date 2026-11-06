@@ -64,6 +64,10 @@ or completed workflow. No customer names, addresses, message content, raw errors
 or raw workflow definitions are returned to the browser. No workflows or CRM
 records are changed by this connection.
 
+For the planned provider-neutral design and the current pilot's limits, see
+[connector architecture](docs/connector-architecture.md). This is a proposal;
+the application does not yet offer plug-and-play n8n or multi-tenant connections.
+
 ## Structure
 
 ```

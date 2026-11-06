@@ -12,3 +12,12 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Generated output and dependencies
+dist/
+node_modules/
+
+# Local credentials
+.env
+.env.*
+!.env.example

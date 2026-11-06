@@ -8,6 +8,6 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "dev": "node scripts/dev.mjs",
-    "test": "node --test city-demo/engine.test.mjs city-demo/connections.test.mjs"
+    "test": "node --test city-demo/engine.test.mjs city-demo/connections.test.mjs lib/*.test.mjs tests/*.test.mjs"
   }
 }

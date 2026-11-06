@@ -17,6 +17,9 @@ export const PUBLIC_FILES = Object.freeze([
   'city-demo/engine.js',
   'city-demo/connections.js',
   'city-demo/city.js',
+  'city-live/index.html',
+  'city-live/styles.css',
+  'city-live/app.js',
 ]);
 
 export async function build() {
@@ -27,6 +30,7 @@ export async function build() {
   }));
   await rm(DIST_DIR, { recursive: true, force: true });
   await mkdir(resolve(DIST_DIR, 'city-demo'), { recursive: true });
+  await mkdir(resolve(DIST_DIR, 'city-live'), { recursive: true });
   await Promise.all(PUBLIC_FILES.map(file => copyFile(
     resolve(PROJECT_ROOT, file), resolve(DIST_DIR, file),
   )));

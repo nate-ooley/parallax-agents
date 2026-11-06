@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="same-origin">
+  <title>Private workflow quarter · Parallax Agents</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to workspace</a>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Parallax Agents home"><span class="brand-mark" aria-hidden="true">P</span>Parallax <em>Agents</em></a>
+    <span class="private-badge"><span aria-hidden="true">▣</span> Private workspace</span>
+    <nav aria-label="Workspace navigation"><a href="/city-demo/">Public demo <span aria-hidden="true">↗</span></a><button id="sign-out" class="text-button" type="button" hidden>Sign out</button></nav>
+  </header>
+  <main id="main">
+    <section id="session-check" class="entry-card" aria-live="polite"><span class="eyebrow">PARALLAX AGENTS</span><h1>Opening your private quarter.</h1><p>Checking your session…</p></section>
+    <section id="login-panel" class="entry-card" hidden aria-labelledby="login-heading">
+      <span class="entry-ornament" aria-hidden="true">✧</span><span class="eyebrow">A PRIVATE VIEW OF YOUR BUSINESS</span>
+      <h1 id="login-heading">Welcome to your<br><em>workflow quarter.</em></h1>
+      <p>Use your workspace access key to view the workflows connected to HighLevel.</p>
+      <form id="login-form">
+        <label for="access-key">Workspace access key</label>
+        <input id="access-key" name="access-key" type="password" autocomplete="off" spellcheck="false" autocapitalize="none" required aria-describedby="login-message">
+        <button id="login-button" class="button primary" type="submit">Open private workspace <span aria-hidden="true">→</span></button>
+      </form>
+      <p id="login-message" class="form-message" role="status" aria-live="polite"></p>
+      <p class="entry-note">Your key is used to open a private session. It is not saved in this page or added to the URL.</p>
+    </section>
+    <section id="workspace" hidden aria-labelledby="workspace-heading">
+      <div class="workspace-heading"><div><span id="location-name" class="eyebrow">CONNECTED WORKSPACE</span><h1 id="workspace-heading">Your workflows.<br><em>A clearer view.</em></h1><p>Real workflow definitions, with execution evidence kept in view.</p></div><button id="refresh" class="button secondary" type="button"><span aria-hidden="true">↻</span> Refresh now</button></div>
+      <div id="refresh-message" class="refresh-message" role="status" aria-live="polite"></div>
+      <div id="summary" class="summary-grid" aria-label="Connection overview"></div>
+      <aside id="source-notice" class="source-notice" aria-labelledby="source-notice-title"></aside>
+      <section class="quarter-panel" aria-labelledby="quarter-title">
+        <div class="panel-heading"><div><span class="eyebrow">YOUR WORKFLOW QUARTER</span><h2 id="quarter-title">Three connected workflows</h2></div><span id="quarter-mode" class="source-chip">Workflow definitions</span></div>
+        <div id="live-city" class="live-city"></div>
+        <p id="city-caption" class="city-caption"></p>
+      </section>
+      <section class="workflow-section" aria-labelledby="workflow-list-title"><div class="section-heading"><h2 id="workflow-list-title">A closer look</h2><p>Select a building or workflow to inspect its source record.</p></div><div id="workflow-list" class="workflow-list" aria-label="Connected workflows"></div></section>
+      <section id="workflow-detail" class="detail-panel" aria-labelledby="detail-title" tabindex="-1"></section>
+      <footer class="workspace-footer"><p>Private HighLevel connection <span aria-hidden="true">·</span> Read-only workspace</p><p>Refreshes every 30 seconds while this page is visible.</p></footer>
+    </section>
+  </main>
+</body>
+</html>

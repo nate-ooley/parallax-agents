@@ -3,6 +3,8 @@ import { readFile } from 'node:fs/promises';
 import { extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import health from '../api/health.mjs';
+import liveSession from '../api/live-session.mjs';
+import highlevel from '../api/highlevel.mjs';
 import { build, DIST_DIR, PUBLIC_FILES } from './build.mjs';
 
 const contentTypes = {
@@ -13,6 +15,7 @@ const contentTypes = {
 const publicRoutes = new Map(PUBLIC_FILES.map(file => [`/${file}`, file]));
 publicRoutes.set('/', 'index.html');
 publicRoutes.set('/city-demo/', 'city-demo/index.html');
+publicRoutes.set('/city-live/', 'city-live/index.html');
 
 function textResponse(response, status, message, extraHeaders = {}) {
   response.writeHead(status, {
@@ -40,13 +43,34 @@ export async function startDevServer({ port = 4175 } = {}) {
         response.end(Buffer.from(await result.arrayBuffer()));
         return;
       }
+      const api = url.pathname === '/api/live-session' ? liveSession : url.pathname === '/api/highlevel' ? highlevel : null;
+      if (api) {
+        if (!['GET', 'POST', 'DELETE', 'HEAD', 'PUT', 'PATCH', 'OPTIONS'].includes(request.method)) {
+          request.resume(); textResponse(response, 405, 'Method not allowed'); return;
+        }
+        const chunks = []; let size = 0;
+        for await (const chunk of request) {
+          size += chunk.length;
+          if (size > 2048) { textResponse(response, 413, 'Request too large'); return; }
+          chunks.push(chunk);
+        }
+        const webRequest = new Request(new URL(request.url, `http://${request.headers.host || '127.0.0.1'}`), {
+          method: request.method,
+          headers: request.headers,
+          ...(!['GET', 'HEAD'].includes(request.method) && chunks.length ? { body: Buffer.concat(chunks) } : {}),
+        });
+        const result = await api.fetch(webRequest);
+        response.writeHead(result.status, Object.fromEntries(result.headers));
+        response.end(Buffer.from(await result.arrayBuffer()));
+        return;
+      }
       if (request.method !== 'GET' && request.method !== 'HEAD') {
         request.resume();
         textResponse(response, 405, 'Method not allowed', { Allow: 'GET, HEAD' });
         return;
       }
-      if (url.pathname === '/city-demo') {
-        response.writeHead(308, { Location: `/city-demo/${url.search}`, 'Cache-Control': 'no-store' });
+      if (url.pathname === '/city-demo' || url.pathname === '/city-live') {
+        response.writeHead(308, { Location: `${url.pathname}/${url.search}`, 'Cache-Control': 'no-store' });
         response.end();
         return;
       }
@@ -86,7 +110,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   }
   const server = await startDevServer({ port: args.length ? Number(args[1]) : 4175 });
   console.log(`Parallax Agents: http://127.0.0.1:${server.address().port}`);
-  console.log('Demo: /city-demo/ · Shared health endpoint: /api/health');
+  console.log('Demo: /city-demo/ · Private city: /city-live/ · Health: /api/health');
   for (const signal of ['SIGINT', 'SIGTERM']) {
     process.once(signal, () => server.close(() => process.exit(0)));
   }
